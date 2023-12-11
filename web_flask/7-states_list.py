@@ -1,16 +1,19 @@
 #!/usr/bin/python3
 """start of methode"""
 from models import storage
-from models.state import State
 from flask import Flask, render_template
 app = Flask(__name__)
 
 
 @app.route("/states_list", strict_slashes=False)
-def state_list():
-    states = sorted(storage.all(State).values(), key=lambda x: x.name)
-    return render_template("7-states_list.html", states=states)
+def states_list():
+    """def states_list"""
+    from models.state import State
+    states = []
+    for state in storage.all(State).values():
+        states.append(state.to_dict())
 
+    return render_template('7-states_list.html', states=states)
 
 @app.teardown_appcontext
 def teardown():
