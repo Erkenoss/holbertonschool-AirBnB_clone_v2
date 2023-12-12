@@ -21,11 +21,14 @@ def afterRequest(self):
 def cities_by_states():
     """def cities_by_states"""
     from models.state import State
-    states = []
-    for state in storage.all(State).values():
-        states.append({**state.to_dict(), **{'cities': state.cities}})
+    from models.city import City
 
-    return render_template('8-cities_by_states.html', states=states)
+    states = storage.all(State).values()
+    cities = storage.all(City).values()
+
+    return render_template('8-cities_by_states.html',
+                           cities=cities,
+                           states=states)
 
 
 if __name__ == '__main__':
