@@ -40,24 +40,17 @@ class DBStorage:
         self.__session = scoped_session(Session)
 
     def all(self, cls=None):
-        """ Query on the current database session """
-        query_objects = {}
-        _class = [User, State, City, Amenity, Place, Review]
-
-        if cls is None:
-            for cls in _class:
-                for instance in self.__session.query(cls):
-                    query_objects[
-                        "{}.{}".format(cls.__name__, instance.id)
-                        ] = instance
+        objects = {}
+        if cls:
+            query = self.__session.query(cls)
         else:
-            for cls in _class:
-                for instance in self.__session.query(cls):
-                    query_objects[
-                        "{}.{}".format(cls.__name__, instance.id)
-                        ] = instance
+            query = self.__session.query(
+                User, State, City, Amenity, Place, Review)
+        for obj in query:
+            key = "{}.{}".format(obj.__class__.__name__, obj.id)
+            objects[key] = obj
 
-        return query_objects
+        return objects
 
     def new(self, obj):
         """ Add a new object """
