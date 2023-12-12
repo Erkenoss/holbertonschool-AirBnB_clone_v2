@@ -15,15 +15,11 @@ def afterRequest(self):
 def cities_list():
     """def cities_list"""
     from models.state import State
-    from models.city import City
+    states = []
+    for state in storage.all(State).values():
+        states.append({**state.to_dict(), **{'cities': state.cities}})
 
-    states = storage.all(State).values()
-    cities = storage.all(City).values()
-
-
-    return render_template('8-cities_by_states.html',
-                           cities=cities,
-                           states=states)
+    return render_template('8-cities_by_states.html', states=states)
 
 
 if __name__ == '__main__':
