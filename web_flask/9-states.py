@@ -15,15 +15,29 @@ def teardown(self):
 
 
 @app.route('/states', strict_slashes=False)
+def slash_state():
+    state = storage.all(State).values()
+    
+    return render_template('9-states.html',
+                            states=state,
+                            road="state_road")
+
+
 @app.route('/states/<id>', strict_slashes=False)
-def cities_by_states():
+def cities_in_state(id):
     """Display a HTML page with a list of all State objects in DBStorage."""
     states = storage.all(State).values()
-    cities = storage.all(City).values()
 
-    return render_template("8-cities_by_states.html",
-                           cities=cities,
-                           states=states)
+    for state in states:
+        if state.id == id:
+            city = state.cities
+            return render_template('9-states.html',
+                                    states=states,
+                                    cities=city,
+                                    state=state,
+                                    road="city_road")
+    
+    return render_template('9-states.html', road="not found")
 
 
 if __name__ == "__main__":

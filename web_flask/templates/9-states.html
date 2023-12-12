@@ -6,22 +6,26 @@
 </HEAD>
 
 <BODY>
-    {% for state in states %}
-        {% if state.id == True %}
-        <H1>States: {{ state.name }}</H1>
-            <UL>
-                {% for city in cities|sort(attribute='name') %}
-                    {% if city.state == state %}
-                        <LI>{{ city.id }}: <B>{{ city.name }}</B></LI>
-                    {% endif %}
-                {% endfor %}
-            </UL>
-        {% else %}
-        <H1>States</H1>
-        <UL>
-            {% for state in states|sort(attribute='name') %}
-            <LI>{{ state.id }}: <B>{{ state.name }}</B></LI>
-        </UL>
+    {% if road == 'state_road' %}
+    <H1>States</H1>
+    <UL>
+        {% for state in states|sort(attribute='name') %}
+        <LI>{{ state.id }}: <B>{{ state.name }}</B>
+        {% endfor %}
+    </UL>
+    {% elif road == 'city_road' %}
+    <H1>States: {{ state.name }}</H1>
+    <H3>Cities:</H3>
+    <UL>
+        {% for city in cities|sort(attribute='name') %}
+            {% if city.state == state %}
+            <LI>{{ city.id }}: <B>{{ city.name }}</B></LI>
+            {% endif %}
+        {% endfor %}
+    </UL>
+    {% else %}
+    <H1>Not found!</H1>
+    {% endif %}
 </BODY>
 
 </HTML>
