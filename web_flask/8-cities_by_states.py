@@ -18,9 +18,12 @@ def cities_list():
     from models.city import City
 
     states = storage.all(State).values()
+    cities = storage.all(City).values()
 
 
-    return render_template('8-cities_by_states.html', states=states)
+    return render_template('8-cities_by_states.html',
+                           cities=cities,
+                           states=states)
 
 
 if __name__ == '__main__':
