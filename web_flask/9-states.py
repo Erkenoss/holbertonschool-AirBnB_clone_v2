@@ -17,10 +17,10 @@ def teardown(self):
 @app.route('/states', strict_slashes=False)
 def slash_state():
     state = storage.all(State).values()
-    
+
     return render_template('9-states.html',
-                            states=state,
-                            road="state_road")
+                           states=state,
+                           road="state_road")
 
 
 @app.route('/states/<id>', strict_slashes=False)
@@ -32,11 +32,11 @@ def cities_in_state(id):
         if state.id == id:
             city = state.cities
             return render_template('9-states.html',
-                                    states=states,
-                                    cities=city,
-                                    state=state,
-                                    road="city_road")
-    
+                                   states=states,
+                                   cities=city,
+                                   state=state,
+                                   road="city_road")
+
     return render_template('9-states.html', road="not found")
 
 
